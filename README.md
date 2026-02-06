@@ -1,56 +1,46 @@
 # HRMS Lite
 
-A lightweight, production-style HRMS Lite system to manage employees and track daily attendance. Built with React + FastAPI + SQLite.
+## Project Overview
+HRMS Lite is a lightweight web app to manage employees and track daily attendance.  
+It includes a React frontend and a FastAPI backend with a simple REST API.
 
-## Tech Stack
+## Tech Stack Used
 - Frontend: React (Vite)
 - Backend: FastAPI (Python)
-- Database: SQLite
+- Database: PostgreSQL (Render) or SQLite for local development
 
-## Features
-- Add, list, and delete employees
-- Mark daily attendance (Present/Absent)
-- View attendance per employee
-- Summary counts (employees + attendance records)
-- Clean, responsive UI with empty/loading/error states
-
-## Project Structure
-- `backend/` FastAPI API + SQLite
-- `frontend/` React UI (Vite)
-
-## Backend Setup
+## Steps To Run Locally
+### Backend
 ```bash
 cd backend
 python -m venv .venv
-.\.venv\Scripts\activate
-pip install -r requirements.txt
-uvicorn app.main:app --reload
+.\.venv\Scripts\python -m pip install -r requirements.txt
+.\.venv\Scripts\python -m uvicorn app.main:app --reload
 ```
+Backend runs at `http://localhost:8000`.
 
-API will run at `http://localhost:8000`.
-
-## Frontend Setup
+### Frontend
 ```bash
 cd frontend
 npm install
 npm run dev
 ```
+Frontend runs at `http://localhost:5173`.
 
-Frontend will run at `http://localhost:5173`.
-
-### Configure API URL
-The frontend reads the backend URL from `VITE_API_URL`.
-Create a `.env` file inside `frontend/` if needed:
+### Configure API URL (Frontend)
+Create `frontend/.env`:
 ```
 VITE_API_URL=http://localhost:8000
 ```
 
-## Assumptions & Limitations
-- Single admin user (no authentication).
-- Attendance is unique per employee per date. Duplicate attendance marks return a 409.
-- SQLite is used for simplicity; can be swapped for Postgres/MySQL.
+### Configure Database (Backend)
+Set a `DATABASE_URL` environment variable for Postgres:
+```
+postgresql://USER:PASSWORD@HOST:PORT/DBNAME
+```
+If `DATABASE_URL` is not set, the app uses local SQLite (`hrms.db`).
 
-## Deployment Notes (User will deploy)
-- Backend: deploy the `backend/` folder to Render/Railway.
-- Frontend: deploy the `frontend/` folder to Vercel/Netlify.
-- Set `VITE_API_URL` to the deployed backend URL.
+## Assumptions Or Limitations
+- Single admin user (no authentication).
+- Attendance is unique per employee per date.
+- Designed for small to medium datasets (HRMS Lite).
